@@ -448,3 +448,61 @@ footer {
     text-align: left;
     margin-left: 1rem;
 }
+
+/* --- Pomodoro Timer --- */
+.pomodoro-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.timer-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+}
+
+.timer-circle {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: conic-gradient(#15b2af 0deg, #f0f0f0 0deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 20px rgba(21, 178, 175, 0.3);
+    transition: all 0.3s ease;
+}
+
+#time-display {
+    font-size: 2.5rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.timer-controls .btn {
+    margin: 10px;
+    background-color: #15b2af;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.timer-controls .btn:hover {
+    background-color: #119a98;
+}
+
+.settings {
+    margin-top: 20px;
+}
+
+.settings input {
+    width: 70px;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
