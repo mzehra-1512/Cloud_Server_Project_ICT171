@@ -10,8 +10,8 @@ function setColor() {
 
 // --- Save Note (Frontend Local Storage) ---
 function saveNote() {
-    const content = document.getElementById('editor').innerHTML;
-    if (content.trim() === "") {
+    const content = document.getElementById('editor').innerHTML.trim();
+    if (content === "") {
         document.getElementById("saveMessage").textContent = "Cannot save empty note!";
         return;
     }
