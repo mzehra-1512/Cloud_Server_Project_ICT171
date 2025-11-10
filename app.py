@@ -117,6 +117,28 @@ def delete_todo():
     save_todos(todos)
     return jsonify({"message": "Todo list deleted successfully!"})
 
+def load_pomodoro():
+    if os.path.exists(POMODORO_FILE):
+        with open(POMODORO_FILE, 'r') as f:
+            return json.load(f)
+    return {"custom_time": 25}
+
+def save_pomodoro(data):
+    with open(POMODORO_FILE, 'w') as f:
+        json.dump(data, f)
+
+@app.route('/pomodoro')
+def pomodoro():
+    pomodoro_data = load_pomodoro()
+    return render_template('pomodoro.html', custom_time=pomodoro_data.get("custom_time", 25))
+
+@app.route('/save_pomodoro', methods=['POST'])
+def save_pomodoro_route():
+    data = request.get_json()
+    save_pomodoro(data)
+    return jsonify({"message": "Custom time saved!"})
+
+
 
 
 #--Run the app--
