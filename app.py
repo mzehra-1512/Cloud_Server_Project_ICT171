@@ -65,9 +65,6 @@ def save_note_route():
      return jsonify({"message": "Note saved successfully!"})
 #--Run the app--
 if __name__== '__main__':
-     os.makedirs("data", exist_ok=True)
-     if not os.path.exists(DATA_FILE):
-          save_notes([])
      app.run(debug=True)
 
     
