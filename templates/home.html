@@ -32,36 +32,42 @@
 		</div>
 
 		</section>
+		<section class="dashboard">
 
-		<div class="recent-notes">
-    		<h2>Recent Notes</h2>
-    		<div class="notes-grid">
-        		{% if notes %}
-            		{% for note in notes[:3] %}
-           			 <div class="note-card">
-            	    	<p class="note-date">{{ note.date }}</p>
-                		<div class="note-content preview" data-full="{{ note.content|safe }}">
-                    		{{ note.content|safe|truncate(100, True, '...') }}
+    		<div class="dashboard-section">
+        		<h2>Recent Notes</h2>
+        		<div class="notes-grid">
+            		{% if notes %}
+                		{% for note in notes[:3] %}
+                		<div class="note-card">
+                    		<p class="note-date">{{ note.date }}</p>
+                    		<div class="note-content preview" data-full="{{ note.content|safe }}">
+                        		{{ note.content|safe|truncate(100, True, '...') }}
+                    		</div>
+                    		{% if note.content|length > 100 %}
+                    		<button class="read-more-btn" onclick="toggleReadMore(this)">Read More</button>
+                    		{% endif %}
                 		</div>
-                		{% if note.content|length > 100 %}
-                		<button class="read-more-btn" onclick="toggleReadMore(this)">Read More</button>
-                		{% endif %}
-            		</div>
-            		{% endfor %}
-        		{% else %}
-            		<p>No notes yet... start writing to stay organized!</p>
-        		{% endif %}
+                		{% endfor %}
+            		{% else %}
+                		<p>No notes yet... start writing to stay organized!</p>
+            		{% endif %}
+        		</div>
     		</div>
-		</div>
 
-		<section class = "dashbard">
-		<div class="card todo-preview">
-			<h2>Today’s To-Do</h2>
-			<ul>
-				<li>Add your first task!</li>
-			</ul>
-		</div>
+    		<div class="dashboard-section">
+        		<h2>Today's To-Do</h2>
+        		<div class="todo-grid">
+            		<div class="card todo-preview">
+                		<ul>
+                    		<li>Add your first task!</li>
+                		</ul>
+            		</div>
+        		</div>
+    		</div>
+
 		</section>
+
     </main>
 
     <footer>
