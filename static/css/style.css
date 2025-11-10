@@ -218,3 +218,49 @@ footer {
     color: #b3b3b3;
     font-style: italic;
 }
+
+.notes-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.note-card {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    padding: 1rem;
+    width: 250px;
+    position: relative;
+    overflow: hidden;
+}
+
+.note-card .note-date {
+    font-size: 0.8rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+
+.note-card .note-content {
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    max-height: 4.5em; /* ~3 lines */
+}
+
+.note-card .note-content.expanded {
+    max-height: 500px; /* large enough to show full note */
+}
+
+.read-more-btn {
+    background: none;
+    border: none;
+    color: #A6C8CA;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    padding: 0;
+}
+
+.read-more-btn:hover {
+    color: #F7B2BD;
+}
