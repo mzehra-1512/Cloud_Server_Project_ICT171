@@ -14,7 +14,9 @@ os.makedirs('data', exist_ok=True)
 if not os.path.exists(DATA_FILE):
      with open(DATA_FILE, 'w') as f:
           json.dump([], f)
-
+if not os.path.exists(TODO_FILE):
+    with open(TODO_FILE, 'w') as f:
+        json.dump([], f)
 
 
 #--Helper Functions--
@@ -34,19 +36,22 @@ def save_notes(notes):
 
 #--Routes for pages-- 
 @app.route('/')
-def home():
-    notes_list = load_notes()
-    notes_list = notes_list[::-1]
-    return render_template('home.html', notes=notes_list)
+def home_page(): 
+    notes_list = load_notes()[::-1]
+    todos = load_todos()
+    today_str = date.today().strftime("%m/%d/%Y")
+    todays_todo = next((t for t in todos if t["date"] == today_str), None)
+    return render_template("home.html", notes=notes_list, todays_todo_page=todays_todo)
+
+@app.route('/todo')
+def todo_page(): 
+    todos = load_todos()
+    return render_template("todo.html", todos=todos)
 
 @app.route('/notes')
 def notes():
     notes_list = load_notes()
     return render_template('notes.html', notes=notes_list)
-
-@app.route('/todo')
-def todo():
-    return render_template('todo.html')
 
 @app.route('/pomodoro')
 def pomodoro():
@@ -88,14 +93,13 @@ def save_todos(todos):
     with open(TODO_FILE, "w") as f:
         json.dump(todos, f)
 
-@app.route('/todo')
-def todo():
-    todos = load_todos()
-    return render_template("todo.html", todos=todos)
 
 @app.route('/save_todo', methods=['POST'])
 def save_todo():
     data = request.get_json()
+    data.setdefault("items", [])
+    if not isinstance(data["items"], list):
+        data["items"] = []
     todos = load_todos()
     todos.append(data)
     save_todos(todos)
@@ -109,12 +113,7 @@ def delete_todo():
     save_todos(todos)
     return jsonify({"message": "Todo list deleted successfully!"})
 
-@app.route('/')
-def home():
-    todos = load_todos()
-    today_str = date.today().strftime("%m/%d/%Y")
-    todays_todo = next((t for t in todos if t["date"] == today_str), None)
-    return render_template("home.html", todays_todo=todays_todo)
+
 
 #--Run the app--
 if __name__== '__main__':
