@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List | The Time Buddy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">The Time Buddy</div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('notes') }}">Notes</a></li>
+                <li><a href="{{ url_for('todo') }}" class="active">Todo</a></li>
+                <li><a href="{{ url_for('pomodoro') }}">Pomodoro</a></li>
+                <li><a href="{{ url_for('planner') }}">Monthly Planner</a></li>
+            </ul>
+        </nav>
+    </header>
+
+<main>
+<section class="todo-container">
+    <h1 class="page-title">My To-Do Lists</h1>
+    <p class="subtitle">Create multiple to-do lists and manage your day efficiently!</p>
+
+    <div id="todo-lists">
+        {% if todos %}
+            {% for todo in todos %}
+                <div class="todo-card">
+                    <p class="todo-date">{{ todo.date }}</p>
+                    <ul class="todo-items">
+                        {% for item in todo.items %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    <button class="delete-btn" onclick="deleteTodo('{{ todo.date }}')">Delete</button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <hr class="divider">
+
+    <div class="new-todo">
+        <h2>Add New To-Do List</h2>
+        <input type="text" id="todoItemInput" placeholder="Enter to-do item" />
+        <button class="btn add-btn" onclick="addItem()">Add Item</button>
+        <ul id="todoItemList"></ul>
+        <button class="btn save-btn" onclick="saveTodo()">Save Todo List</button>
+        <p id="saveMessage" class="save-message"></p>
+    </div>
+</section>
+</main>
+
+<footer>
+    <p> The Time Buddy © 2025 | Muskan Zehra | Student ID: 35933188</p>
+</footer>
+</body>
+</html>
