@@ -57,10 +57,6 @@ def notes():
     notes_list = load_notes()
     return render_template('notes.html', notes=notes_list)
 
-@app.route('/pomodoro')
-def pomodoro():
-    return render_template('pomodoro.html')
-
 @app.route('/planner')
 def planner():
     return render_template('planner.html')
