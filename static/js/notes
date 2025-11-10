@@ -8,7 +8,7 @@ function setColor() {
     document.execCommand('foreColor', false, color);
 }
 
-// --- Save Note (Frontend Local Storage) ---
+// --- Save Note to Flask Backend ---
 function saveNote() {
     const content = document.getElementById('editor').innerHTML.trim();
     if (content === "") {
@@ -16,20 +16,27 @@ function saveNote() {
         return;
     }
 
-    // Save to local storage for now
-    const notes = JSON.parse(localStorage.getItem("notes")) || [];
-    notes.push({
+    const noteData = {
         content: content,
         date: new Date().toLocaleString()
+    };
+
+    fetch('/save_note', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(noteData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("saveMessage").textContent = data.message;
+        setTimeout(() => {
+            document.getElementById("saveMessage").textContent = "";
+        }, 2500);
+        document.getElementById('editor').innerHTML = "";
+        location.reload(); 
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById("saveMessage").textContent = "Failed to save note!";
     });
-
-    localStorage.setItem("notes", JSON.stringify(notes));
-
-    document.getElementById("saveMessage").textContent = "Note saved locally!";
-    setTimeout(() => {
-        document.getElementById("saveMessage").textContent = "";
-    }, 2500);
-
-    // Clear editor
-    document.getElementById('editor').innerHTML = "";
 }
