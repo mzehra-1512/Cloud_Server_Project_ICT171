@@ -41,7 +41,7 @@ def home_page():
     todos = load_todos()
     today_str = date.today().strftime("%m/%d/%Y")
     todays_todo = next((t for t in todos if t["date"] == today_str), None)
-    return render_template("home.html", notes=notes_list, todays_todo_page=todays_todo)
+    return render_template("home.html", notes=notes_list, todays_todo=todays_todo)
 
 @app.route('/todo')
 def todo_page(): 
