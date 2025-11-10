@@ -1,6 +1,7 @@
 from datetime import date
 from flask import Flask, render_template, request, jsonify
 import json, os
+import calendar
 
 #--Flask App Setup--
 app = Flask(__name__)
@@ -9,6 +10,7 @@ app = Flask(__name__)
 DATA_FILE = 'data/notes.json'
 TODO_FILE = 'data/todo.json'
 POMODORO_FILE = 'data/pomodoro.json'
+PLANNER_FILE = 'data/planner.json'
 
 os.makedirs('data', exist_ok=True)
 
@@ -21,7 +23,9 @@ if not os.path.exists(TODO_FILE):
 if not os.path.exists(POMODORO_FILE):
     with open(POMODORO_FILE, 'w') as f:
         json.dump({"custom_time": 25}, f)
-
+if not os.path.exists(PLANNER_FILE):
+    with open(PLANNER_FILE, 'w') as f:
+        json.dump({}, f)
 
 #--Helper Functions--
 def load_notes():
@@ -56,10 +60,6 @@ def todo_page():
 def notes():
     notes_list = load_notes()
     return render_template('notes.html', notes=notes_list)
-
-@app.route('/planner')
-def planner():
-    return render_template('planner.html')
 
 #--API for saving notes--
 @app.route('/save_note', methods=['POST'])
@@ -134,15 +134,62 @@ def save_pomodoro_route():
     save_pomodoro(data)
     return jsonify({"message": "Custom time saved!"})
 
+def load_planner():
+    if os.path.exists(PLANNER_FILE):
+        with open(PLANNER_FILE, 'r') as f:
+            return json.load(f)
+    return {}
 
+def save_planner(planner_data):
+    with open(PLANNER_FILE, 'w') as f:
+        json.dump(planner_data, f, indent=4)
+
+
+# Planner page route
+@app.route('/planner')
+def planner():
+    year = request.args.get('year', date.today().year, type=int)
+    month = request.args.get('month', date.today().month, type=int)
+    cal = calendar.Calendar(firstweekday=0)
+    month_days = cal.monthdayscalendar(year, month)  # list of weeks
+    planner_data = load_planner()
+    month_name = calendar.month_name[month]  # Get full month name
+    return render_template('planner.html', month_days=month_days, year=year, month=month, month_name=month_name, planner_data=planner_data)
+
+# API to save events
+@app.route('/save_event', methods=['POST'])
+def save_event():
+    data = request.get_json()
+    date_str = data.get("date")  # format: YYYY-MM-DD
+    event_text = data.get("event", "").strip()
+    if not date_str or not event_text:
+        return jsonify({"success": False, "message": "Invalid data"}), 400
+
+    planner_data = load_planner()
+    if date_str not in planner_data:
+        planner_data[date_str] = []
+    planner_data[date_str].append(event_text)
+    save_planner(planner_data)
+    return jsonify({"success": True, "message": "Event saved!"})
+
+
+# API to delete event
+@app.route('/delete_event', methods=['POST'])
+def delete_event():
+    data = request.get_json()
+    date_str = data.get("date")
+    index = data.get("index")
+    planner_data = load_planner()
+    if date_str in planner_data and 0 <= index < len(planner_data[date_str]):
+        planner_data[date_str].pop(index)
+        if not planner_data[date_str]:
+            del planner_data[date_str]
+        save_planner(planner_data)
+        return jsonify({"success": True})
+    return jsonify({"success": False}), 400
 
 
 #--Run the app--
 if __name__== '__main__':
      app.run(debug=True)
 
-    
-
-
-
-	
