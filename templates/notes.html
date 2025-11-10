@@ -52,10 +52,32 @@
             <div class="notes-grid">
                 {% for note in notes %}
                     <div class="note-card">
-                        <p class ="note-date">{{ note.date }}</p>
-                        <div class="note-content">{{ note.content|safe }}</div>
+                        <p class="note-date">{{ note.date }}</p>
+                        <div class="note-content preview" data-full="{{ note.content|safe }}">
+                            {{ note.content|safe|truncate(100, True, '...') }}
+                        </div>
+
+                        {% if note.content|length > 100 %}
+                        <button class="read-more-btn" onclick="toggleReadMore(this)">Read More</button>
+                        {% endif %}
+
+                        <div class="note-actions-buttons">
+                            <button class="download-btn"
+                                    data-content="{{ note.content|escape }}"
+                                    data-date="{{ note.date }}"
+                                    onclick="downloadNoteFromButton(this)">
+                                Download
+                            </button>
+                            <button class="delete-btn"
+                                    onclick="deleteNote('{{ note.date }}')">
+                                Delete
+                            </button>
+                        </div>
+
+
                     </div>
                 {% endfor %}
+
             </div>
         {% else %} 
             <p>No saved notes yet. Start writing above!</p>
