@@ -37,7 +37,8 @@
                             {% endfor %}
                         {% endif %}
                     </ul>
-                    <button class="delete-btn" onclick="deleteTodo('{{ todo['date'] }}')">Delete</button>
+                    <button class="delete-btn" onclick="deleteTodo('{{ todo['date']|escape }}')">Delete</button>
+
                 </div>
             {% endfor %}
 
