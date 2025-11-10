@@ -44,6 +44,24 @@
         <button class="btn save-btn" onclick="saveNote()">Save Note</button>
         <p id="saveMessage" class="save-message"></p>
     </div>
+
+    <hr class = "divider">
+
+    <div class="saved-notes">
+        <h2>Saved Notes</h2>
+        {% if notes %}
+            <div class="notes-grid">
+                {% for note in notes %}
+                    <div class="note-card">
+                        <p class ="note-date">{{ note.date }}</p>
+                        <div class="note-content">{{ note.content|safe }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %} 
+            <p>No saved notes yet. Start writing above!</p>
+        {% endif %}
+    </div>    
 </section>
 
 <script src="{{ url_for('static', filename='js/notes.js') }}"></script>
