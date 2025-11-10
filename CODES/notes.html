@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Time Buddy</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <body>
     <header>
         <nav class="navbar">
             <div class="logo">The Time Buddy</div>
@@ -38,7 +37,6 @@
         <input type="color" id="colorPicker" title="Text Color" onchange="setColor()">
     </div>
 
-    <div id="editor" contenteditable="true" class="editor" placeholder="Start typing your note here..."></div>
 
     <div class="note-actions">
         <button class="btn save-btn" onclick="saveNote()">Save Note</button>
@@ -72,6 +70,5 @@
     <footer>
         <p> The Time Buddy © 2025 | Muskan Zehra | Student ID: 35933188</p>
     </footer>
-</body>
 </body>
 </html>
