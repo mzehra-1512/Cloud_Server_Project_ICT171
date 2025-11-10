@@ -1,0 +1,35 @@
+// --- Text Formatting Functions ---
+function format(command, value = null) {
+    document.execCommand(command, false, value);
+}
+
+function setColor() {
+    const color = document.getElementById('colorPicker').value;
+    document.execCommand('foreColor', false, color);
+}
+
+// --- Save Note (Frontend Local Storage) ---
+function saveNote() {
+    const content = document.getElementById('editor').innerHTML.trim();
+    if (content === "") {
+        document.getElementById("saveMessage").textContent = "Cannot save empty note!";
+        return;
+    }
+
+    // Save to local storage for now
+    const notes = JSON.parse(localStorage.getItem("notes")) || [];
+    notes.push({
+        content: content,
+        date: new Date().toLocaleString()
+    });
+
+    localStorage.setItem("notes", JSON.stringify(notes));
+
+    document.getElementById("saveMessage").textContent = "Note saved locally!";
+    setTimeout(() => {
+        document.getElementById("saveMessage").textContent = "";
+    }, 2500);
+
+    // Clear editor
+    document.getElementById('editor').innerHTML = "";
+}
