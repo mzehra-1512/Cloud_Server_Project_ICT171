@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 #Path to notes data file
 DATA_FILE = 'data/notes.json'
+TODO_FILE = 'data/todo.json'
 
 os.makedirs('data', exist_ok=True)
 
@@ -76,6 +77,43 @@ def delete_note():
     save_notes(notes)
     return jsonify({"message": "Note deleted successfully!"})
 
+def load_todos():
+    if os.path.exists(TODO_FILE):
+        with open(TODO_FILE, "r") as f:
+            return json.load(f)
+    return []
+
+def save_todos(todos):
+    with open(TODO_FILE, "w") as f:
+        json.dump(todos, f)
+
+@app.route('/todo')
+def todo():
+    todos = load_todos()
+    return render_template("todo.html", todos=todos)
+
+@app.route('/save_todo', methods=['POST'])
+def save_todo():
+    data = request.get_json()
+    todos = load_todos()
+    todos.append(data)
+    save_todos(todos)
+    return jsonify({"message": "Todo list saved successfully!"})
+
+@app.route('/delete_todo', methods=['POST'])
+def delete_todo():
+    data = request.get_json()
+    todos = load_todos()
+    todos = [t for t in todos if t["date"] != data["date"]]
+    save_todos(todos)
+    return jsonify({"message": "Todo list deleted successfully!"})
+
+@app.route('/')
+def home():
+    todos = load_todos()
+    today_str = date.today().strftime("%m/%d/%Y")
+    todays_todo = next((t for t in todos if t["date"] == today_str), None)
+    return render_template("home.html", todays_todo=todays_todo)
 
 #--Run the app--
 if __name__== '__main__':
