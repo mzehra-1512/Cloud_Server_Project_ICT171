@@ -480,7 +480,8 @@ footer {
     font-weight: bold;
 }
 
-.timer-controls .btn {
+.timer-controls .btn,
+.settings .btn {
     margin: 10px;
     background-color: #15b2af;
     color: white;
@@ -491,7 +492,8 @@ footer {
     transition: 0.3s;
 }
 
-.timer-controls .btn:hover {
+.timer-controls .btn:hover,
+.settings .btn:hover {
     background-color: #119a98;
 }
 
@@ -505,4 +507,9 @@ footer {
     border-radius: 10px;
     border: 1px solid #ccc;
     text-align: center;
+}
+
+.timer-controls .btn.active {
+    background-color: #119a98; 
+    transform: scale(0.95);    
 }
