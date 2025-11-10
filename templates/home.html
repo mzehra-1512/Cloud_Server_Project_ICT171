@@ -12,12 +12,13 @@
         <nav class="navbar">
             <div class="logo">The Time Buddy</div>
             <ul class="nav-links">
-                <li><a href="home.html" class="active">Home</a></li>
-				<li><a href="notes.html">Notes</a></li>
-				<li><a href="todo.html">Todo</a></li>
-				<li><a href="pomodoro.html">Pomodoro</a></li>
-				<li><a href="planner.html">Monthly Planner</a></li>
-            </ul>
+    			<li><a href="{{ url_for('home') }}" class="active">Home</a></li>
+    			<li><a href="{{ url_for('notes') }}">Notes</a></li>
+    			<li><a href="{{ url_for('todo') }}">Todo</a></li>
+    			<li><a href="{{ url_for('pomodoro') }}">Pomodoro</a></li>
+    			<li><a href="{{ url_for('planner') }}">Monthly Planner</a></li>
+			</ul>
+
         </nav>
     </header>
 
