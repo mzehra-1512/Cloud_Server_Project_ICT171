@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Time Buddy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+    <nav class="navbar">
+        <div class="logo">The Time Buddy</div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('homepage') }}">Home</a></li>
+            <li><a href="{{ url_for('notes') }}">Notes</a></li>
+            <li><a href="{{ url_for('todo_page') }}">Todo</a></li>
+            <li><a href="{{ url_for('pomodoro') }}" class="active">Pomodoro</a></li>
+            <li><a href="{{ url_for('planner') }}">Monthly Planner</a></li>
+        </ul>
+    </nav>
+</header>  
+<main>
+<section class="pomodoro-container">
+    <h1 class="page-title">Pomodoro Timer</h1>
+    <p class="subtitle">Stay focused with adjustable timer sessions!</p>
+    
+    <div class="timer-wrapper">
+        <div class="timer-circle">
+            <span id="time-display">25:00</span>
+        </div>
+    </div>
+
+    <div class="timer-controls">
+        <button class="btn" onclick="startTimer()">Start</button>
+        <button class="btn" onclick="pauseTimer()">Pause</button>
+        <button class="btn" onclick="resetTimer()">Reset</button>
+    </div>
+
+    <div class="settings">
+        <h3>Adjust Timer (minutes)</h3>
+        <input type="number" id="minutesInput" min="1" max="60" value="25">
+        <button class="btn save-btn" onclick="setCustomTime()">Set Time</button>
+        <p id="saveMessage"></p>
+    </div>
+</section>
+</main>
+<footer>
+    <p>The Time Buddy © 2025 | Muskan Zehra | Student ID: 35933188</p>
+</footer>
+
+<script src="{{ url_for('static', filename='js/pomodoro.js') }}"></script>
+</body>
+</html>
