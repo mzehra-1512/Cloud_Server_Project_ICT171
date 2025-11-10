@@ -11,9 +11,9 @@
         <nav class="navbar">
             <div class="logo">The Time Buddy</div>
             <ul class="nav-links">
-                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('home_page') }}">Home</a></li>
                 <li><a href="{{ url_for('notes') }}">Notes</a></li>
-                <li><a href="{{ url_for('todo') }}" class="active">Todo</a></li>
+                <li><a href="{{ url_for('todo_page') }}" class="active">Todo</a></li>
                 <li><a href="{{ url_for('pomodoro') }}">Pomodoro</a></li>
                 <li><a href="{{ url_for('planner') }}">Monthly Planner</a></li>
             </ul>
@@ -29,15 +29,18 @@
         {% if todos %}
             {% for todo in todos %}
                 <div class="todo-card">
-                    <p class="todo-date">{{ todo.date }}</p>
+                    <p class="todo-date">{{ todo["date"] }}</p>
                     <ul class="todo-items">
-                        {% for item in todo.items %}
-                            <li>{{ item }}</li>
-                        {% endfor %}
+                        {% if todo.items %}
+                            {% for item in todo["items"] %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        {% endif %}
                     </ul>
-                    <button class="delete-btn" onclick="deleteTodo('{{ todo.date }}')">Delete</button>
+                    <button class="delete-btn" onclick="deleteTodo('{{ todo['date'] }}')">Delete</button>
                 </div>
             {% endfor %}
+
         {% endif %}
     </div>
 
@@ -57,5 +60,7 @@
 <footer>
     <p> The Time Buddy © 2025 | Muskan Zehra | Student ID: 35933188</p>
 </footer>
+<script src="{{ url_for('static', filename='js/todo.js') }}"></script>
+
 </body>
 </html>
