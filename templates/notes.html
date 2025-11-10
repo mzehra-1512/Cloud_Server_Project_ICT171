@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Time Buddy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CODES/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">The Time Buddy</div>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+				<li><a href="notes.html" class = "active">Notes</a></li>
+				<li><a href="todo.html">Todo</a></li>
+				<li><a href="pomodoro.html">Pomodoro</a></li>
+				<li><a href="planner.html">Monthly Planner</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+<section class="notes-container">
+    <h1 class="page-title">My Notes</h1>
+    <p class="subtitle">Type freely, style beautifully, and save your thoughts.</p>
+
+    <div class="toolbar">
+        <button onclick="format('bold')" title="Bold"><b>B</b></button>
+        <button onclick="format('italic')" title="Italic"><i>I</i></button>
+        <button onclick="format('underline')" title="Underline"><u>U</u></button>
+        <button onclick="format('insertunorderedlist')" title="Bullet List">• List</button>
+        <button onclick="format('justifyLeft')" title="Align Left">⬅</button>
+        <button onclick="format('justifyCenter')" title="Align Center">⬆</button>
+        <button onclick="format('justifyRight')" title="Align Right">➡</button>
+        <input type="color" id="colorPicker" title="Text Color" onchange="setColor()">
+    </div>
+
+
+    <div class="note-actions">
+        <button class="btn save-btn" onclick="saveNote()">Save Note</button>
+        <p id="saveMessage" class="save-message"></p>
+    </div>
+
+    <hr class = "divider">
+
+    <div class="saved-notes">
+        <h2>Saved Notes</h2>
+        {% if notes %}
+            <div class="notes-grid">
+                {% for note in notes %}
+                    <div class="note-card">
+                        <p class ="note-date">{{ note.date }}</p>
+                        <div class="note-content">{{ note.content|safe }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %} 
+            <p>No saved notes yet. Start writing above!</p>
+        {% endif %}
+    </div>    
+</section>
+
+<script src="{{ url_for('static', filename='CODES/notes.js') }}"></script>
+
+
+    </main>
+
+    <footer>
+        <p> The Time Buddy © 2025 | Muskan Zehra | Student ID: 35933188</p>
+    </footer>
+</body>
+</html>
