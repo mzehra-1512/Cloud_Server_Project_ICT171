@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Time Buddy</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='static/css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
 </head>
 <body>
@@ -27,15 +27,24 @@
 			<h1>Welcome back!</h1>
 			<p>Let’s make today productive and creative!</p>
 		<div class="hero-buttons">
-			<a href="notes.html" class="btn">Write a Note</a>
-			<a href="todo.html" class="btn">View To-Do</a>
+    		<a href="{{ url_for('notes') }}" class="btn">Write a Note</a>
+    		<a href="{{ url_for('todo') }}" class="btn">View To-Do</a>
 		</div>
+
 		</section>
 
 		<section class="dashboard">
 		<div class="card notes-preview">
 			<h2>Recent Notes</h2>
-			<p>No notes yet... start writing to stay organized!</p>
+			{% if notes %}
+				<ul>
+				{% for note in notes [:3] %}
+					<li>{{ note.content|safe }} <span style="font-size:0.8reme; color:#555;">({{ note.date }})</span></li>
+				{% endfor %}
+				</ul>
+			{% else %}
+				<p>No notes yet... start writing to stay organized!</p>
+			{% endif %}
 		</div>
 
 		<div class="card todo-preview">
