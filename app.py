@@ -66,6 +66,17 @@ def save_note_route():
      notes.append(new_note)
      save_notes(notes)
      return jsonify({"message": "Note saved successfully!"})
+
+@app.route('/delete_note', methods=['POST'])
+def delete_note():
+    data = request.get_json()
+    note_date = data.get("date")
+    notes = load_notes()
+    notes = [note for note in notes if note["date"] != note_date]
+    save_notes(notes)
+    return jsonify({"message": "Note deleted successfully!"})
+
+
 #--Run the app--
 if __name__== '__main__':
      app.run(debug=True)
