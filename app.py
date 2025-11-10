@@ -8,6 +8,7 @@ app = Flask(__name__)
 #Path to notes data file
 DATA_FILE = 'data/notes.json'
 TODO_FILE = 'data/todo.json'
+POMODORO_FILE = 'data/pomodoro.json'
 
 os.makedirs('data', exist_ok=True)
 
@@ -17,6 +18,9 @@ if not os.path.exists(DATA_FILE):
 if not os.path.exists(TODO_FILE):
     with open(TODO_FILE, 'w') as f:
         json.dump([], f)
+if not os.path.exists(POMODORO_FILE):
+    with open(POMODORO_FILE, 'w') as f:
+        json.dump({"custom_time": 25}, f)
 
 
 #--Helper Functions--
