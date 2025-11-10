@@ -33,10 +33,13 @@ def save_notes(notes):
 #--Routes for pages-- 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    notes_list = load_notes()
+    notes_list = notes_list[::-1]
+    return render_template('home.html', notes=notes_list)
 
 @app.route('/notes')
 def notes():
+    notes_list = load_notes()
     return render_template('notes.html', notes=notes_list)
 
 @app.route('/todo')
@@ -68,5 +71,7 @@ if __name__== '__main__':
      app.run(debug=True)
 
     
+
+
 
 	
