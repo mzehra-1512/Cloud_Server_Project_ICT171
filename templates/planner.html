@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Time Buddy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+    <nav class="navbar">
+        <div class="logo">The Time Buddy</div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('home_page') }}">Home</a></li>
+            <li><a href="{{ url_for('notes') }}">Notes</a></li>
+            <li><a href="{{ url_for('todo_page') }}">Todo</a></li>
+            <li><a href="{{ url_for('pomodoro') }}">Pomodoro</a></li>
+            <li><a href="{{ url_for('planner') }}" class="active">Monthly Planner</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+<section class="planner-container">
+    <h1 class="page-title">Monthly Planner</h1>
+
+    <div class="calendar-nav">
+        <a href="{{ url_for('planner', year=year-1 if month==1 else year, month=12 if month==1 else month-1) }}" class="calendar-btn">&lt; Prev</a>
+        <span class="month-year">{{ month_name }} {{ year }}</span>
+        <a href="{{ url_for('planner', year=year+1 if month==12 else year, month=1 if month==12 else month+1) }}" class="calendar-btn">Next &gt;</a>
+    </div>
+
+    <table class="calendar">
+        <thead>
+            <tr>
+                <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th>
+                <th>Thu</th><th>Fri</th><th>Sat</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for week in month_days %}
+            <tr>
+                {% for day in week %}
+                {% if day == 0 %}
+                <td></td>
+                {% else %}
+                {% set date_str = '{:04d}-{:02d}-{:02d}'.format(year, month, day) %}
+                <td class="calendar-day" data-date="{{ date_str }}">
+                    <div class="day-number">{{ day }}</div>
+                    <ul class="events-list">
+                        {% for event in planner_data.get(date_str, []) %}
+                        <li>{{ event }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="event-modal" id="event-modal">
+        <h3 id="modal-date"></h3>
+        <textarea id="event-text" placeholder="Add your event here"></textarea>
+        <button id="save-event-btn" class="btn save-btn">Save Event</button>
+        <hr>
+        <ul id="existing-events" class="events-list">
+            
+        </ul>
+        <button id="close-modal" class="btn">Close</button>
+    </div>
+</section>
+</main>
+
+<footer>
+    <p>The Time Buddy © 2025 | Muskan Zehra | Student ID: 35933188</p>
+</footer>
+
+<script src="{{ url_for('static', filename='js/planner.js') }}"></script>
+</body>
+</html>
