@@ -12,9 +12,9 @@
         <nav class="navbar">
             <div class="logo">The Time Buddy</div>
             <ul class="nav-links">
-    			<li><a href="{{ url_for('home') }}" class="active">Home</a></li>
+    			<li><a href="{{ url_for('home_page') }}" class="active">Home</a></li>
     			<li><a href="{{ url_for('notes') }}">Notes</a></li>
-    			<li><a href="{{ url_for('todo') }}">Todo</a></li>
+    			<li><a href="{{ url_for('todo_page') }}">Todo</a></li>
     			<li><a href="{{ url_for('pomodoro') }}">Pomodoro</a></li>
     			<li><a href="{{ url_for('planner') }}">Monthly Planner</a></li>
 			</ul>
@@ -28,7 +28,7 @@
 			<p>Let’s make today productive and creative!</p>
 		<div class="hero-buttons">
     		<a href="{{ url_for('notes') }}" class="btn">Write a Note</a>
-    		<a href="{{ url_for('todo') }}" class="btn">View To-Do</a>
+    		<a href="{{ url_for('todo_page') }}" class="btn">View To-Do</a>
 		</div>
 
 		</section>
