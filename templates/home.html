@@ -5,86 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Time Buddy</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
 </head>
 <body>
     <header>
         <nav class="navbar">
             <div class="logo">The Time Buddy</div>
             <ul class="nav-links">
-    			<li><a href="{{ url_for('home_page') }}" class="active">Home</a></li>
-    			<li><a href="{{ url_for('notes') }}">Notes</a></li>
-    			<li><a href="{{ url_for('todo_page') }}">Todo</a></li>
-    			<li><a href="{{ url_for('pomodoro') }}">Pomodoro</a></li>
-    			<li><a href="{{ url_for('planner') }}">Monthly Planner</a></li>
-			</ul>
-
+                <li><a href="{{ url_for('home_page') }}" class="active">Home</a></li>
+                <li><a href="{{ url_for('notes') }}">Notes</a></li>
+                <li><a href="{{ url_for('todo_page') }}">Todo</a></li>
+                <li><a href="{{ url_for('pomodoro') }}">Pomodoro</a></li>
+                <li><a href="{{ url_for('planner') }}">Monthly Planner</a></li>
+            </ul>
         </nav>
     </header>
 
     <main>
         <section class="hero">
-			<h1>Welcome back!</h1>
-			<p>Let’s make today productive and creative!</p>
-		<div class="hero-buttons">
-    		<a href="{{ url_for('notes') }}" class="btn">Write a Note</a>
-    		<a href="{{ url_for('todo_page') }}" class="btn">View To-Do</a>
-		</div>
+            <h1>Welcome back!</h1>
+            <p>Let’s make today productive and creative!</p>
+            <div class="hero-buttons">
+                <a href="{{ url_for('notes') }}" class="btn">Write a Note</a>
+                <a href="{{ url_for('todo_page') }}" class="btn">View To-Do</a>
+            </div>
+        </section>
 
-		</section>
-		<section class="dashboard">
-			<div class="dashboard-flex">
-        		<div class="dashboard-section">
-            		<h2>Recent Notes</h2>
-            		<div class="notes-grid">
-                		{% if notes %}
-                    		{% for note in notes[:3] %}
-                    		<div class="note-card">
-                        		<p class="note-date">{{ note.date }}</p>
-                        		<div class="note-content preview" data-full="{{ note.content|safe }}">
-                            		{{ note.content|safe|truncate(100, True, '...') }}
-                        		</div>
-                        		{% if note.content|length > 100 %}
-                        		<button class="read-more-btn" onclick="toggleReadMore(this)">Read More</button>
-                        		{% endif %}
-                    		</div>
-                    		{% endfor %}
-                		{% else %}
-                    		<div class="note-card">
-                        		<p>No notes yet... start writing to stay organized!</p>
-                    		</div>
-                		{% endif %}
-            		</div>
-        		</div>
-				<div class="dashboard-section">
-            		<h2>Today's To-Do</h2>
-            		<div class="todo-grid">
-                		{% if todays_todo %}
-							<div class="card todo-preview">
-                        		<ul>
-                            		{% for item in todays_todo['items'] %}
-                                		<li>{{ item }}</li>
-                            		{% endfor %}
-                        		</ul>
-                    		</div>
-						{% else %}
-                    		<div class="card todo-preview">
-                        		<ul>
-                            		<li>Add your first task!</li>
-                        		</ul>
-							</div>
-						{% endif %}
-					</div>
-				</div>
-			</div>
-		</section>
+        <section class="dashboard">
+            <div class="dashboard-row">
+                <div class="dashboard-section">
+                    <h2>Recent Notes</h2>
+                    <div class="notes-grid">
+                        {% if notes %}
+                            {% for note in notes[:3] %}
+                                <div class="note-card">
+                                    <p class="note-date">{{ note.date }}</p>
+                                    <div class="note-content">
+                                        {{ note.content|safe }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="note-card">
+                                <p>No notes yet... start writing to stay organized!</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
 
+                <div class="dashboard-section">
+                    <h2>Today's To-Do</h2>
+                    <div class="todo-grid">
+                        {% if todays_todo %}
+                            <div class="card todo-preview">
+                                <ul>
+                                    {% for item in todays_todo['items'] %}
+                                        <li>{{ item }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% else %}
+                            <div class="card todo-preview">
+                                <ul>
+                                    <li>Add your first task!</li>
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer>
         <p>The Time Buddy © 2025 | Muskan Zehra | Student ID: 35933188</p>
     </footer>
-	<script src="{{ url_for('static', filename='js/home.js') }}"></script>
-
 </body>
 </html>
