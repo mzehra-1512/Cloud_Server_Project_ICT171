@@ -20,75 +20,66 @@
         </nav>
     </header>
 
-<main>
+    <main>
+        <section class="notes-container">
+            <h1 class="page-title">My Notes</h1>
+            <p class="subtitle">Type freely, style beautifully, and save your thoughts.</p>
 
-<section class="notes-container">
-    <h1 class="page-title">My Notes</h1>
-    <p class="subtitle">Type freely, style beautifully, and save your thoughts.</p>
-
-    <div class="toolbar">
-        <button onclick="format('bold')" title="Bold"><b>B</b></button>
-        <button onclick="format('italic')" title="Italic"><i>I</i></button>
-        <button onclick="format('underline')" title="Underline"><u>U</u></button>
-        <button onclick="format('insertunorderedlist')" title="Bullet List">• List</button>
-        <button onclick="format('justifyLeft')" title="Align Left">⬅</button>
-        <button onclick="format('justifyCenter')" title="Align Center">⬆</button>
-        <button onclick="format('justifyRight')" title="Align Right">➡</button>
-        <input type="color" id="colorPicker" title="Text Color" onchange="setColor()">
-    </div>
-
-    <div id="editor" contenteditable="true" class="editor" placeholder="Start typing your note here..."></div>
-
-    <div class="note-actions">
-        <button class="btn save-btn" onclick="saveNote()">Save Note</button>
-        <p id="saveMessage" class="save-message"></p>
-    </div>
-
-    <hr class = "divider">
-
-    <div class="saved-notes">
-        <h2>Saved Notes</h2>
-        {% if notes %}
-            <div class="notes-grid">
-                {% for note in notes %}
-                    <div class="note-card">
-                        <p class="note-date">{{ note.date }}</p>
-                        <div class="note-content preview" data-full="{{ note.content|safe }}">
-                            {{ note.content|safe|truncate(100, True, '...') }}
-                        </div>
-
-                        {% if note.content|length > 100 %}
-                        <button class="read-more-btn" onclick="toggleReadMore(this)">Read More</button>
-                        {% endif %}
-
-                        <div class="note-actions-buttons">
-                            <button class="download-btn"
-                                    data-content="{{ note.content|escape }}"
-                                    data-date="{{ note.date }}"
-                                    onclick="downloadNoteFromButton(this)">
-                                Download
-                            </button>
-                            <button class="delete-btn"
-                                    onclick="deleteNote('{{ note.date }}')">
-                                Delete
-                            </button>
-                        </div>
-
-
-                    </div>
-                {% endfor %}
-
+            <div class="toolbar">
+                <button onclick="format('bold')" title="Bold"><b>B</b></button>
+                <button onclick="format('italic')" title="Italic"><i>I</i></button>
+                <button onclick="format('underline')" title="Underline"><u>U</u></button>
+                <button onclick="format('insertunorderedlist')" title="Bullet List">• List</button>
+                <button onclick="format('justifyLeft')" title="Align Left">⬅</button>
+                <button onclick="format('justifyCenter')" title="Align Center">⬆</button>
+                <button onclick="format('justifyRight')" title="Align Right">➡</button>
+                <input type="color" id="colorPicker" title="Text Color" onchange="setColor()">
             </div>
-        {% else %} 
-            <p>No saved notes yet. Start writing above!</p>
-        {% endif %}
-    </div>    
-</section>
-</main>
-<footer>
-    <p> The Time Buddy © 2025 | Muskan Zehra | Student ID: 35933188</p>
-</footer>
-<script src="{{ url_for('static', filename='js/notes.js') }}"></script>
 
+            <div id="editor" contenteditable="true" class="editor" placeholder="Start typing your note here..."></div>
+
+            <div class="note-actions">
+                <button class="btn save-btn" onclick="saveNote()">Save Note</button>
+                <p id="saveMessage" class="save-message"></p>
+            </div>
+
+            <hr class="divider">
+
+            <div class="saved-notes">
+                <h2>Saved Notes</h2>
+                {% if notes %}
+                    <div class="notes-grid">
+                        {% for note in notes %}
+                            <div class="note-card">
+                                <p class="note-date">{{ note.date }}</p>
+                                <div class="note-content">
+                                    {{ note.content|safe }}
+                                </div>
+                                <div class="note-actions-buttons">
+                                    <button class="download-btn"
+                                            data-content="{{ note.content|escape }}"
+                                            data-date="{{ note.date }}"
+                                            onclick="downloadNoteFromButton(this)">
+                                        Download
+                                    </button>
+                                    <button class="delete-btn"
+                                            onclick="deleteNote('{{ note.date }}')">
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>No saved notes yet. Start writing above!</p>
+                {% endif %}
+            </div>    
+        </section>
+    </main>
+
+    <footer>
+        <p>The Time Buddy © 2025 | Muskan Zehra | Student ID: 35933188</p>
+    </footer>
+    <script src="{{ url_for('static', filename='js/notes.js') }}"></script>
 </body>
 </html>
