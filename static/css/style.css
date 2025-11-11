@@ -93,108 +93,143 @@ main {
     transform: translateY(-3px);
 }
 
-/* Dashboard container */
+/* --- DASHBOARD LAYOUT --- */
 .dashboard {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
     padding: 2rem 1rem;
-    gap: 2rem;
 }
 
-/* Each section spacing */
-.dashboard-section {
-    margin-bottom: 2rem;
-}
-
-.dashboard-flex {
+.dashboard-row {
     display: flex;
     justify-content: center;
+    align-items: flex-start;
     gap: 2rem;
     flex-wrap: wrap;
+    max-width: 1000px;
 }
 
+/* --- CARD SECTIONS --- */
 .dashboard-section {
-    flex: 1 1 300px;
-    max-width: 400px;
+    flex: 1 1 400px;
+    max-width: 450px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Notes grid */
+.dashboard-section h2 {
+    color: #A6C8CA;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    text-align:center;
+}
+
+/* --- NOTES GRID --- */
 .notes-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1rem;
-    align-items: flex-start;
+    align-items: start; /* prevents taller cards from stretching others */
 }
 
-/* To-Do grid (for consistent layout) */
+
+/* --- TO-DO GRID --- */
 .todo-grid {
-    display: flex;
+    display: grid;
     flex-wrap: wrap;
     gap: 1rem;
+    justify-content: center;
 }
 
-/* Note & To-Do card styling */
+/* --- CARDS --- */
 .note-card,
 .card.todo-preview {
     background-color: #fff;
+    flex: 1;
     border-radius: 15px;
     box-shadow: 0 3px 8px rgba(0,0,0,0.1);
     padding: 1rem;
-    width: 250px; 
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
     position: relative;
-    overflow: visible;
-}
-
-/* Recent Notes content preview */
-.note-card .note-content {
     overflow: hidden;
+}
+
+.note-card .note-date {
+    font-size: 0.8rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+
+.note-card .note-content {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    overflow: visible;
     transition: max-height 0.3s ease;
-    max-height: 4.5em; /* ~3 lines */
+    max-height:none;
+    text-align: left;
+    display: block;
+    line-height: 1.5;
 }
 
-.note-card .note-content.expanded {
-    max-height: 1000px;
-}
-
-/* Read More button */
-.read-more-btn {
-    background: none;
-    border: none;
-    color: #A6C8CA;
-    cursor: pointer;
-    font-weight: 600;
-    margin-top: 0.5rem;
-    padding: 0;
-}
-
-.read-more-btn:hover {
-    color: #F7B2BD;
-}
-
-/* Responsive adjustments */
-@media (max-width: 800px) {
-    .note-card,
-    .card.todo-preview {
-        width: 45%; /* 2 cards per row */
-    }
-}
-
-@media (max-width: 500px) {
-    .note-card,
-    .card.todo-preview {
-        width: 100%; /* stack cards vertically */
-    }
-}
-
-/* --- Footer --- */
-footer {
-    text-align: center;
-    padding: 1rem;
-    background-color: #E9D3FF;
-    margin-top: 3rem;
-    font-size: 0.9rem;
+/* --- Buttons --- */
+.save-btn,
+.add-btn,
+.download-btn {
+    background-color: #A6C8CA;
     color: #3A3A3A;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: 0.3s ease;
 }
+
+.save-btn:hover,
+.add-btn:hover,
+.download-btn:hover {
+    background-color: #F7B2BD;
+    transform: translateY(-2px);
+}
+
+.download-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+}
+
+.delete-btn {
+    background-color: #FF6B6B;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 0.3rem 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #FF4C4C;
+    transform: translateY(-2px);
+}
+
+.note-actions-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
 /* --- Notes Page --- */
 .notes-container {
     max-width: 800px;
@@ -203,7 +238,7 @@ footer {
     background: #fff;
     border-radius: 20px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    text-align: center;
+    text-align: left;
 }
 
 .page-title {
@@ -265,126 +300,13 @@ footer {
     background-color: #fff;
 }
 
-.note-actions {
-    margin-top: 1.5rem;
-}
-
-.save-btn {
-    background-color: #A6C8CA;
-    color: #3A3A3A;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 30px;
-    font-weight: 600;
-    transition: 0.3s ease;
-    cursor: pointer;
-}
-
-.save-btn:hover {
-    background-color: #F7B2BD;
-    transform: translateY(-3px);
-}
-
-.save-message {
-    margin-top: 0.8rem;
-    font-weight: 500;
-    color: #555;
-}
-
 .editor:empty::before {
     content: attr(placeholder);
     color: #b3b3b3;
     font-style: italic;
 }
 
-.notes-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.note-card {
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-    padding: 1rem;
-    width: 250px;
-    position: relative;
-    overflow: hidden;
-}
-
-.note-card .note-date {
-    font-size: 0.8rem;
-    color: #555;
-    margin-bottom: 0.5rem;
-}
-
-.note-card .note-content {
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    max-height: 4.5em; /* ~3 lines */
-}
-
-.note-card .note-content.expanded {
-    max-height: 500px; /* large enough to show full note */
-}
-
-.read-more-btn {
-    background: none;
-    border: none;
-    color: #A6C8CA;
-    cursor: pointer;
-    font-weight: 600;
-    margin-top: 0.5rem;
-    padding: 0;
-}
-
-.read-more-btn:hover {
-    color: #F7B2BD;
-}
-
-.download-btn {
-    background-color: #A6C8CA;
-    color: #3A3A3A;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 0.5rem;
-    transition: 0.3s ease;
-}
-
-.download-btn:hover {
-    background-color: #F7B2BD;
-    transform: translateY(-2px);
-}
-
-/* Delete button styling */
-.delete-btn {
-    background-color: #FF6B6B; /* red for danger */
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 0.5rem 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 0.5rem;
-    transition: 0.3s ease;
-}
-
-.delete-btn:hover {
-    background-color: #FF4C4C;
-    transform: translateY(-2px);
-}
-
-/* Wrap Download and Delete buttons nicely */
-.note-actions-buttons {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-}
-
+/* --- To-Do --- */
 .todo-container {
     max-width: 800px;
     margin: 2rem auto;
@@ -409,10 +331,12 @@ footer {
     margin-bottom: 0.5rem;
 }
 
-.todo-items {
+.todo-items,
+#todoItemList {
     list-style: disc;
     text-align: left;
     margin-left: 1rem;
+    padding: 5px;
 }
 
 .new-todo input[type="text"] {
@@ -421,46 +345,6 @@ footer {
     border: 2px solid #A6C8CA;
     margin-right: 0.5rem;
     width: 60%;
-}
-
-.add-btn, .save-btn {
-    background-color: #A6C8CA;
-    color: #3A3A3A;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 0.5rem;
-    transition: 0.3s ease;
-}
-
-.add-btn:hover, .save-btn:hover {
-    background-color: #F7B2BD;
-    transform: translateY(-2px);
-}
-
-.delete-btn {
-    background-color: #FF6B6B;
-    color: #fff;
-    border: none;
-    padding: 0.3rem 0.8rem;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 600;
-    margin-top: 0.5rem;
-}
-
-.delete-btn:hover {
-    background-color: #FF4C4C;
-    transform: translateY(-2px);
-}
-
-#todoItemList {
-    list-style: disc;
-    margin-top: 0.5rem;
-    text-align: left;
-    margin-left: 1rem;
 }
 
 /* --- Pomodoro Timer --- */
@@ -511,6 +395,11 @@ footer {
     background-color: #119a98;
 }
 
+.timer-controls .btn.active {
+    background-color: #119a98; 
+    transform: scale(0.95);    
+}
+
 .settings {
     margin-top: 20px;
 }
@@ -523,11 +412,7 @@ footer {
     text-align: center;
 }
 
-.timer-controls .btn.active {
-    background-color: #119a98; 
-    transform: scale(0.95);    
-}
-
+/* --- Planner / Calendar --- */
 .planner-container {
     max-width: 900px;
     margin: 2rem auto;
@@ -542,9 +427,13 @@ footer {
 
 .calendar th, .calendar td {
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 5px;
     vertical-align: top;
-    height: 100px;
+    height: 120px;
+    width: 14.28%;
+    max-height: 120px;
+    overflow: hidden;
+    position: relative;
 }
 
 .calendar-day {
@@ -555,6 +444,7 @@ footer {
 .day-number {
     font-weight: bold;
     margin-bottom: 5px;
+    height: 20px;
 }
 
 .events-list {
@@ -624,23 +514,24 @@ footer {
     font-size: 1.2rem;
 }
 
-.calendar td {
-    border: 1px solid #ccc;
-    padding: 5px;
-    vertical-align: top;
-    height: 120px; 
-    width: 14.28%;
-    max-height: 120px;
-    overflow: hidden; 
-    position: relative;
+/* --- Footer --- */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #E9D3FF;
+    margin-top: 3rem;
+    font-size: 0.9rem;
+    color: #3A3A3A;
 }
 
-.calendar tbody tr {
-    height: 120px;
-}
+/* --- Responsive Fix --- */
+@media (max-width: 900px) {
+    .dashboard-row {
+        flex-direction: column;
+        align-items: center;
+    }
 
-.day-number {
-    font-weight: bold;
-    margin-bottom: 5px;
-    height: 20px; /* keep consistent spacing */
+    .dashboard-section {
+        width: 90%;
+    }
 }
